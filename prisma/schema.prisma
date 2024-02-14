@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id               String        @id @unique
+  name             String?
+  email            String        @unique
+  stripeCustomerId String?       @unique
+  colorScheme      String        @default("theme-blue")
+  Subscription     Subscription?
+  Notes            Note[]
+  Projects         Project[]
+  Customers        Customer[]
+  Roles            UserRole[]
+}
+
+model Role {
+  id       String       @id @unique
+  name     String       @unique
+  users    UserRole[] // Relation field, representing the many-to-many relationship
+  rolePermissions RolePermission[]
+}
+
+// Join table for the many-to-many relationship between User and Role
+model UserRole {
+  userId    String
+  roleId    String
+  user      User @relation(fields: [userId], references: [id])
+  role      Role @relation(fields: [roleId], references: [id])
+
+  @@id([userId, roleId]) // Composite primary key
+}
+
+model Permission {
+  id              String              @id @unique
+  name            String           @unique
+  route     String
+  rolePermissions RolePermission[]
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id])
+  permission   Permission @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+}
+
+
+model Subscription {
+  stripeSubscriptionId String   @id @unique
+  invterval            String
+  status               String
+  planId               String
+  currentPeriodStart   Int
+  currentPeriodEnd     Int
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  user                 User     @relation(fields: [userId], references: [id])
+  userId               String   @unique
+}
+
+model Note {
+  id          String @id @default(uuid())
+  title       String
+  description String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+}
+
+model Project {
+  id         String @id @default(uuid())
+  name       String
+  customer   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
+
+  Customer   Customer?   @relation(fields: [customerId], references: [id])
+  customerId String?
+}
+
+model Customer {
+  id         String @id @default(uuid())
+  name       String
+  code       String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? 
+
+  Projects Project[]
+}

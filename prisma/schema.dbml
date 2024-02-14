@@ -1,0 +1,33 @@
+Table User {
+  id Int [pk, increment] // primary key, auto increments
+  email String [unique]
+  name String
+}
+
+Table Role {
+  id Int [pk, increment] // primary key, auto increments
+  name String [unique]
+}
+
+Table Permission {
+  id Int [pk, increment] // primary key, auto increments
+  name String [unique]
+  description String
+  route String
+}
+
+Table UserRole {
+  userId Int [ref: > User.id] // foreign key reference to User table
+  roleId Int [ref: > Role.id] // foreign key reference to Role table
+}
+
+Table RolePermission {
+  roleId Int [ref: > Role.id] // foreign key reference to Role table
+  permissionId Int [ref: > Permission.id] // foreign key reference to Permission table
+}
+
+// Relationships
+Ref: UserRole.userId > User.id
+Ref: UserRole.roleId > Role.id
+Ref: RolePermission.roleId > Role.id
+Ref: RolePermission.permissionId > Permission.id
