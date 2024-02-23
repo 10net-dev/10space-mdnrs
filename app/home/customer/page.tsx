@@ -72,11 +72,12 @@ export default async function DashboardPage() {
               <CardDescription>List of customers</CardDescription>
             </CardHeader>
 
-
-            <Button className="flex items-center justify-center m-6">
-              <PlusCircle className="mr-2 w-5 h-5" /> 
-              Create
-            </Button>
+            <Link href="/home/customer/new">
+              <Button className="flex items-center justify-center m-6">
+                <PlusCircle className="mr-2 w-5 h-5" /> 
+                Create
+              </Button>
+            </Link>
 
         </div>
         <CardContent>
