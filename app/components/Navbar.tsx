@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ThemeToggle } from "./Themetoggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,6 +8,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserNav } from "./UserNav";
+import Logo from "../../public/logo.png"
 
 export async function Navbar() {
   const { isAuthenticated, getUser } = getKindeServerSession();
@@ -16,13 +18,15 @@ export async function Navbar() {
     <nav className="fixed top-0 w-full z-50 shadow border-b bg-background h-[10vh] flex items-center">
       <div className="container flex items-center justify-between">
         <Link href="/">
-          <h1 className="font-bold text-3xl">
-            10<span className="text-primary">Saas</span>
-          </h1>
+          <Image 
+            src={Logo}
+            className="h-16 w-auto mr-2"
+            alt="Logo Menara Danareksa"
+            />
         </Link>
 
         <div className="flex items-center gap-x-5">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
 
           {(await isAuthenticated()) ? (
             <UserNav
@@ -32,13 +36,13 @@ export async function Navbar() {
             />
           ) : (
             <div className="flex items-center gap-x-5">
-              <LoginLink>
+              {/* <LoginLink>
                 <Button>Sign In</Button>
               </LoginLink>
 
               <RegisterLink>
                 <Button variant="secondary">Sign Up</Button>
-              </RegisterLink>
+              </RegisterLink> */}
             </div>
           )}
         </div>

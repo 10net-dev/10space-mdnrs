@@ -10,8 +10,8 @@ import { unstable_noStore as noStore } from "next/cache";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "10Saas",
-  description: "Empower your business",
+  title: "Menara Danareksa - Booking System",
+  description: "Book early",
 };
 
 async function getData(userId: string) {
@@ -40,7 +40,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} ${data?.colorScheme ?? "theme-blue"}`}
+        className={`${inter.className} ${data?.colorScheme ?? "theme-slate"}`}
       >
         <ThemeProvider
           attribute="class"

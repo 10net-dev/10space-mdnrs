@@ -6,7 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 // Define variants for each component if needed. For demonstration, using a simple variant for TabsRoot.
-const tabsRootVariants = cva(["rounded-lg border bg-card text-card-foreground shadow-sm"], {
+const tabsRootVariants = cva(["bg-card text-card-foreground shadow-sm"], {
     variants: {
         size: {
             small: "w-[400px]", // Specific width for small variant
@@ -44,7 +44,7 @@ const TabsTrigger = React.forwardRef<
         cn(
             "px-5 h-[45px] flex-1 flex items-center justify-center text-[15px] leading-none select-none first:rounded-tl-md last:rounded-tr-md outline-none cursor-default",
             "transition-colors duration-150 ease-in-out", // Transition for smooth color changes
-            "hover:bg-primary hover:text-white", // Hover state styles
+            "hover:bg-grey-600 hover:text-yellow-600", // Hover state styles
             // Apply primary background color when tab is active or focused
             "[data-state=active]:bg-primary [data-state=active]:text-white",
             "focus:ring-2 focus:ring-primary focus:outline-none focus:bg-primary focus:text-white", // Focus state styles including background and text color
