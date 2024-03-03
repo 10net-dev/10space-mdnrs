@@ -4,6 +4,8 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
 import { Login } from "./components/Login"
+import { RoomsCatalogue } from "./components/RoomsCatalogue"
+import { RoomsList } from "./components/RoomsList"
 import { Footer } from "./components/Footer"
 
 export default async function Home() {
@@ -14,7 +16,9 @@ export default async function Home() {
   }
   return (
     <div>
-      <Login/>
+      {/* <Login/> */}
+      {/* <RoomsCatalogue/> */}
+      <RoomsList/>
       <Footer/>
 
     </div>

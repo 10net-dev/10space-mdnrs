@@ -47,7 +47,7 @@ const TabsTrigger = React.forwardRef<
             "hover:bg-grey-600 hover:text-yellow-600", // Hover state styles
             // Apply primary background color when tab is active or focused
             "[data-state=active]:bg-primary [data-state=active]:text-white",
-            "focus:ring-2 focus:ring-primary focus:outline-none focus:bg-primary focus:text-white", // Focus state styles including background and text color
+            "focus:ring-1 focus:ring-white focus:outline-none focus:bg-yellow-500 focus:text-white", // Focus state styles including background and text color
             className)} {...props} />
 ));
 TabsTrigger.displayName = "TabsTrigger";
