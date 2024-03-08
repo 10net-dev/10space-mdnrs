@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,24 @@ import Room1 from "../../public/room-1.png"
 import Room2 from "../../public/room-2.png"
 
 export function RoomsList() {
+
+
+  useEffect(() => {
+    const snapScript: string = "https://app.sandbox.midtrans.com/snap/snap.js"
+    const clientKey: any = process.env.MIDTRANS_PUBLIC_CLIENT_DEV
+
+    const script = document.createElement('script')
+    script.src = snapScript
+
+    script.setAttribute("data-client-key", clientKey)
+    script.async = true
+
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, []);
 
   const rooms = [
     { name: "Anantara", category: "Meeting Room", capacity: "200", image:"../../public/room-1.png"},
@@ -24,6 +43,45 @@ export function RoomsList() {
     { name: "Port", category: "Ballroom", capacity: "10-20", image:"../../public/room-2.png"},
     { name: "Bridge", category: "Ballroom", capacity: "10-20", image:"../../public/room-2.png"}
   ]
+
+  const product = {
+    id: "room_md_005",
+    name: "room_aryanusa", 
+    price: 350000, 
+    quantity: 1 
+  }
+
+  const checkout = async () => {
+    const data = {
+      id: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: product.quantity,
+    }
+
+    try {
+      const response = await fetch('/api/tokenizer', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const responseData = await response.json()
+
+      if (!responseData || !responseData.token) {
+        throw new Error('Invalid response data')
+      }
+
+      ;(window as any).snap.pay(responseData.token)
+      console.log(responseData)
+    } catch (error: any) {
+      console.error('Error during checkout:', error.message)
+      // Handle the error as needed
+    }
+  }
 
   return (
     <section>
@@ -51,14 +109,14 @@ export function RoomsList() {
                           <p className="text-gray-400">{room.category}</p>
                           <h2 className="mt-2 text-lg font-semibold text-gray-800">{room.name}</h2>
                         </div>
-                        <Button className="bg-yellow-600">Book Now</Button>
+                        <Button className="bg-yellow-600" onClick={checkout}>Book Now</Button>
                       </div>
 
                       <hr className="mt-4 mb-4" />
 
                       <div className="flex flex-wrap justify-between">
                         <p className="inline-flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className=" h-5 w-5 stroke-yellow-600 lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"     className=" h-5 w-5 stroke-yellow-600 lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
 
                           <span className="ml-2 text-gray-600">{room.capacity}</span>
                         </p>

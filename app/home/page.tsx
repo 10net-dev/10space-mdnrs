@@ -60,7 +60,7 @@ export default async function DashboardPage() {
   const data = await getData(user?.id as string);
 
   const cardData = [
-    { title: 'Project', stats:42, icon:Building2, href:"/home/project"},
+    { title: 'Room', stats:42, icon:Building2, href:"/home/room"},
     { title: 'Customer', stats:3, icon:FolderKanban, href:"/home/customer"},
     { title: 'Vendor', stats:7, icon:FolderKanban, href:"/home/vendor" },
     { title: 'Sales', stats:7, icon:Building2, href:"/home/sales" },

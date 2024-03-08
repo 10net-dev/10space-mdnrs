@@ -26,8 +26,37 @@ Table RolePermission {
   permissionId Int [ref: > Permission.id] // foreign key reference to Permission table
 }
 
-// Relationships
+
+Table Customer {
+  customerId int [pk, unique, not null]
+  name varchar
+  email varchar
+  phone varchar
+  company varchar
+}
+
+Table Room {
+  roomId int [pk, unique, not null]
+  name varchar
+  type varchar
+  area float
+  capacity int
+}
+
+Table Order {
+  orderId int [pk, unique, not null]
+  date date [pk]
+  time time [pk]
+  roomId int [not null]
+  customerId int [not null]
+  status varchar
+  paymentStatus varchar
+}
+
+
 Ref: UserRole.userId > User.id
 Ref: UserRole.roleId > Role.id
 Ref: RolePermission.roleId > Role.id
 Ref: RolePermission.permissionId > Permission.id
+Ref: "Room"."roomId" < "Order"."roomId"
+Ref: "Customer"."customerId" < "Order"."customerId"

@@ -15,41 +15,64 @@ import Link from "next/link";
 import prisma from "@/app/lib/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import { unstable_noStore as noStore } from "next/cache";
+import { revalidatePath, unstable_noStore as noStore } from "next/cache";
 
-export default async function NewNoteRoute() {
+async function getData({ userId, roomId }: { userId: string; roomId: string }) {
   noStore();
+  const data = await prisma.room.findUnique({
+    where: {
+      id: roomId,
+      userId: userId,
+    },
+    select: {
+      title: true,
+      description: true,
+      id: true,
+    },
+  });
+
+  return data;
+}
+
+export default async function DynamicRoute({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const data = await getData({ userId: user?.id as string, roomId: params.id });
 
   async function postData(formData: FormData) {
     "use server";
 
-    if (!user) {
-      throw new Error("Not authorized");
-    }
+    if (!user) throw new Error("you are not allowed");
 
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    
-    await prisma.note.create({
+
+    await prisma.room.update({
+      where: {
+        id: data?.id,
+        userId: user.id,
+      },
       data: {
-        userId: user?.id,
         description: description,
         title: title,
       },
     });
 
+    revalidatePath("/home");
+
     return redirect("/home");
   }
-
   return (
     <Card>
       <form action={postData}>
         <CardHeader>
-          <CardTitle>New Note</CardTitle>
+          <CardTitle>Edit Room</CardTitle>
           <CardDescription>
-            Right here you can now create your new notes
+            Right here you can now edit your notes
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-y-5">
@@ -59,7 +82,8 @@ export default async function NewNoteRoute() {
               required
               type="text"
               name="title"
-              placeholder="Title for your note"
+              placeholder="Title for your room"
+              defaultValue={data?.title}
             />
           </div>
 
@@ -67,8 +91,9 @@ export default async function NewNoteRoute() {
             <Label>Description</Label>
             <Textarea
               name="description"
-              placeholder="Describe your note as you want"
+              placeholder="Describe your room as you want"
               required
+              defaultValue={data?.description}
             />
           </div>
         </CardContent>

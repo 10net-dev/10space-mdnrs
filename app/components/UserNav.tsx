@@ -26,7 +26,7 @@ import Link from "next/link";
 
 export const navItems = [
   { name: "Home", href: "/home", icon: Home },
-  { name: "Project", href: "/home/project", icon: Building2 },
+  { name: "Room", href: "/home/room", icon: Building2 },
   { name: "Customer", href: "/home/customer", icon: FolderKanban },
   { name: "Note", href: "/home/note", icon: NotebookPen },
 ];

@@ -18,11 +18,11 @@ export async function Navbar() {
     <nav className="fixed top-0 w-full z-50 shadow border-b bg-background h-[10vh] flex items-center">
       <div className="container flex items-center justify-between">
         <Link href="/">
-          <Image 
+          {/* <Image 
             src={Logo}
             className="h-16 w-auto mr-2"
             alt="Logo Menara Danareksa"
-            />
+            /> */}
         </Link>
 
         <div className="flex items-center gap-x-5">

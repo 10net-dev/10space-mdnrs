@@ -18,6 +18,7 @@ export default function CancelledRoute() {
               <p className="text-sm text-muted-foreground">
                 No worries, you wont be charged. Please try again
               </p>
+              <p>PT Tennet Nasional Teknologi</p>
             </div>
 
             <div className="mt-5 sm:mt-6 w-full">

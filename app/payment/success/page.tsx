@@ -21,6 +21,7 @@ export default function SuccessRoute() {
                 Congrats on your subscription, please check your email for
                 further instructions
               </p>
+              <p>PT Tennet Nasional Teknologi</p>
             </div>
 
             <div className="mt-5 sm:mt-6 w-full">
