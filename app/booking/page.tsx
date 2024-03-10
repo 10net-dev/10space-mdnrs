@@ -4,21 +4,19 @@ import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
-import { Public } from "./components/Public"
-import { RoomsCatalogue } from "./components/RoomsCatalogue"
-import { Footer } from "./components/Footer"
+import { Rooms } from "./room/page"
+import { Footer } from "../components/Footer"
 
-export default async function Home() {
+export default async function Book() {
 
   const { isAuthenticated } = getKindeServerSession();
 
   if (await isAuthenticated()) {
-    return redirect("/home");
+    return redirect("/booking");
   }
   return (
     <div>
-      <Public/>
-      {/* <RoomsCatalogue/> */}
+      <Rooms/>
       <Footer/>
 
     </div>

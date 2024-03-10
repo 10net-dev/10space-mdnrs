@@ -9,8 +9,8 @@ import {
   TabsTrigger,
   TabsContent
 } from "@/components/ui/tabs";
-import { TabRent  } from "./TabRent";
-import { TabBooking  } from "./TabBooking";
+import { TabTenant  } from "./TabTenant";
+import { TabMeetingRoom  } from "./TabMeetingRoom";
 
 export function Tabs() {
 
@@ -27,10 +27,10 @@ export function Tabs() {
         </TabsList>
 
         <TabsContent value="tab1" className="p-4">
-          <TabRent/>
+          <TabTenant/>
         </TabsContent>
         <TabsContent value="tab2" className="p-4">
-          <TabBooking />
+          <TabMeetingRoom />
         </TabsContent>
       </TabsRoot>
     </section>

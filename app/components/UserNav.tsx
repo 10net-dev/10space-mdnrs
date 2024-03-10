@@ -25,17 +25,17 @@ import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Link from "next/link";
 
 export const navItems = [
-  { name: "Home", href: "/home", icon: Home },
-  { name: "Room", href: "/home/room", icon: Building2 },
-  { name: "Customer", href: "/home/customer", icon: FolderKanban },
-  { name: "Note", href: "/home/note", icon: NotebookPen },
+  { name: "Home", href: "/admin", icon: Home },
+  { name: "Room", href: "/admin/room", icon: Building2 },
+  { name: "Order", href: "/admin/order", icon: FolderKanban },
+  { name: "Note", href: "/admin/note", icon: NotebookPen },
 ];
 
 export const navItemsSetting = [
-  { name: "Settings", href: "/home/settings", icon: Settings },
-  { name: "Master", href: "/home/settings/master", icon: Database },
-  { name: "User Managemet", href: "/home/settings/user-management", icon: Users2 },
-  // { name: "Billing", href: "/home/billing", icon: CreditCard },
+  { name: "Settings", href: "/admin/settings", icon: Settings },
+  { name: "Master", href: "/admin/settings/master", icon: Database },
+  { name: "User Managemet", href: "/admin/settings/user-management", icon: Users2 },
+  // { name: "Billing", href: "/admin/billing", icon: CreditCard },
 ];
 
 export function UserNav({

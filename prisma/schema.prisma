@@ -16,12 +16,13 @@ model User {
   name             String?
   email            String        @unique
   stripeCustomerId String?       @unique
-  colorScheme      String        @default("theme-blue")
+  colorScheme      String        @default("theme-yellow")
   Subscription     Subscription?
   Notes            Note[]
   Customers        Customer[]
   Roles            UserRole[]
   Rooms            Room[]
+  Orders           Order[]
 }
 
 model Role {
@@ -85,8 +86,6 @@ model Customer {
   User   User?   @relation(fields: [userId], references: [id])
   userId String?
 
-  Order       Order[]
-
 }
 
 model Note {
@@ -120,14 +119,44 @@ model Room {
 }
 
 // Define the Order model
+enum orderStatus{
+  CREATED
+  PROCESSING
+  COMPLETED
+  CANCELED
+}
+
+enum paymentStatus{
+  SETTLEMENT
+  PENDING
+  CANCEL
+  EXPIRE
+  FAILURE
+}
+
+enum category{
+  TENANT_LEAD
+  SPACE_BOOKING
+}
+
 model Order {
-  id              Int      @id @default(autoincrement())
-  date            DateTime
-  time            DateTime
-  roomId          String
-  Room            Room     @relation(fields: [roomId], references: [id])
-  customerId      String
-  Customer        Customer @relation(fields: [customerId], references: [id])
-  status          String
-  paymentStatus   String
+  id              String      @id @default(uuid())
+  orderId         String?   
+  reservationDate            DateTime?
+  reservationTime            DateTime?
+  roomId          String?
+  Room            Room?     @relation(fields: [roomId], references: [id])
+  category        String
+  nameCustomer    String
+  emailCustomer   String
+  phoneCustomer   String
+  companyCustomer String
+  orderStatus     String
+  paymentStatus   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String?
 }
